@@ -53,3 +53,10 @@ $ ekm show <keypair-name> --region <region> # => Show keypair information
 ```sh
 $ ekm delete <keypair-name> --region <region> # Delete keypair from AWS.
 ```
+
+License
+-----------
+
+Copyright &copy; 2015 Masataka Kuwabara
+Licensed [MIT][mit]
+[MIT]: http://www.opensource.org/licenses/mit-license.php
