@@ -14,11 +14,9 @@ Usage
 
 ### New
 
-(Not implemented)
-
 ```sh
 $ ekm new <keypair-name> --region <region>         # => create and output pem to STDOUT
-$ ekm new <keypair-name> --region <region> --file  # => create and save pem as <Keypair-name>.pem 
+$ ekm new <keypair-name> --region <region> --file  # => create and save pem as <Keypair-name>.pem (not implemented)
 ```
 
 ### Import

@@ -1,11 +1,19 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 
+	"github.com/awslabs/aws-sdk-go/aws"
+	"github.com/awslabs/aws-sdk-go/service/ec2"
 	"github.com/codegangsta/cli"
 )
+
+var regionFlag = cli.StringFlag{
+	Name:  "region",
+	Value: "",
+}
 
 var Commands = []cli.Command{
 	commandNew,
@@ -20,7 +28,8 @@ var commandNew = cli.Command{
 	Usage: "",
 	Description: `
 `,
-	Action: doNew,
+	Flags:  []cli.Flag{regionFlag},
+	Action: setAWSConfig(doNew),
 }
 
 var commandImport = cli.Command{
@@ -63,11 +72,29 @@ func debug(v ...interface{}) {
 
 func assert(err error) {
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println(err)
+		os.Exit(1)
 	}
 }
 
-func doNew(c *cli.Context) {
+func setAWSConfig(f func(*cli.Context, *aws.Config)) func(c *cli.Context) {
+	return func(c *cli.Context) {
+		region := c.String("region")
+		cfg := &aws.Config{
+			Region: region,
+		}
+		f(c, cfg)
+	}
+}
+
+func doNew(ctx *cli.Context, cfg *aws.Config) {
+	name := ctx.Args()[0]
+	e := ec2.New(cfg)
+	keyOut, err := e.CreateKeyPair(&ec2.CreateKeyPairInput{
+		KeyName: toPtr(name),
+	})
+	assert(err)
+	fmt.Print(*keyOut.KeyMaterial)
 }
 
 func doImport(c *cli.Context) {
@@ -80,4 +107,8 @@ func doShow(c *cli.Context) {
 }
 
 func doDelete(c *cli.Context) {
+}
+
+func toPtr(s string) *string {
+	return &s
 }
