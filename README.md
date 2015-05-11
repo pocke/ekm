@@ -5,7 +5,8 @@ Installation
 --------------
 
 ```sh
-$ go get github.com/pocke/ekm
+$ go get -d github.com/pocke/ekm
+$ make
 ```
 
 Usage
