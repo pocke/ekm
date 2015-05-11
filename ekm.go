@@ -11,8 +11,8 @@ func main() {
 	app.Name = "ekm"
 	app.Version = Version
 	app.Usage = ""
-	app.Author = ""
-	app.Email = ""
+	app.Author = "Masataka Kuwabara"
+	app.Email = "p.ck.t22@gmail.com"
 	app.Commands = Commands
 
 	app.Run(os.Args)
